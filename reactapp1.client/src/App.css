@@ -1,0 +1,258 @@
+﻿#root {
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 2rem;
+    text-align: center;
+}
+
+tr:nth-child(even) {
+    background: #F2F2F2;
+}
+
+tr:nth-child(odd) {
+    background: #FFF;
+}
+
+th, td {
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+.containerbox {
+    border-radius: 10px;
+    box-shadow: 5px 5px 10px gray;
+    background-color: white;
+    padding: 20px;
+    text-align: left;
+}
+
+.App {
+    text-align: center;
+    font-family: Arial, sans-serif;
+}
+
+.App-header {
+    background-color: #282c34;
+    color: white;
+    padding: 50px 20px;
+}
+
+    .App-header h1 {
+        font-size: 3rem;
+    }
+
+    .App-header p {
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+    }
+
+.cta-button {
+    background-color: #61dafb;
+    border: none;
+    color: white;
+    padding: 15px 30px;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+    .cta-button:hover {
+        background-color: #21a1f1;
+    }
+
+main {
+    padding: 50px 20px;
+    background-color: #f4f4f4;
+}
+
+.feature {
+    margin-bottom: 50px;
+}
+
+    .feature h2 {
+        font-size: 2rem;
+    }
+
+.feature-cards {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.card {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 200px;
+}
+
+    .card h3 {
+        font-size: 1.5rem;
+    }
+
+.cta-section {
+    background-color: #282c34;
+    color: white;
+    padding: 50px 20px;
+}
+
+footer {
+    background-color: #20232a;
+    color: white;
+    padding: 20px;
+    font-size: 0.9rem;
+}
+
+/* App.css */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.App {
+    text-align: center;
+}
+
+.header {
+    background: white;
+    color: black;
+    padding: 10px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+}
+
+    .header .logo h1 {
+        margin: 0;
+        font-size: 1.5em;
+    }
+
+    .header nav ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+    }
+
+        .header nav ul li {
+            margin: 0 15px;
+        }
+
+            .header nav ul li a {
+                color: black;
+                text-decoration: none;
+            }
+
+.hero {
+    position: relative;
+    background-color: cornflowerblue;
+    background-size: cover;
+    background-position: center;
+    height: 50vh;
+    color: white;
+}
+
+    .hero h2 {
+        padding-top: 50px;
+        font-size: 3em;
+    }
+
+    .hero p {
+        font-size: 1.5em;
+    }
+
+    .hero button {
+        padding: 15px 30px;
+        background-color: #FF5733;
+        color: white;
+        border: none;
+        font-size: 1.1em;
+        cursor: pointer;
+    }
+
+        .hero button:hover {
+            background-color: #C70039;
+        }
+
+.features {
+    padding: 50px 20px;
+    background-color: #f4f4f4;
+}
+
+    .features h2 {
+        font-size: 2.5em;
+    }
+
+.feature-cards {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+}
+
+.feature-card {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    text-align: center;
+}
+
+    .feature-card h3 {
+        font-size: 1.5em;
+    }
+
+.footer {
+    background: #333;
+    color: white;
+    padding: 20px;
+}
+
+    .footer p {
+        margin: 0;
+    }
+
+.logo img {
+    width: 80px;
+    height: auto;
+}
+
+.news-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    padding: 1rem;
+}
+
+.news-card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 1rem;
+}
+
+    .news-card img {
+        width: 100%;
+        max-height: 200px; 
+        object-fit: cover;
+        margin-bottom: 1rem;
+    }
+
+    .news-card h3 {
+        font-size: 1.2rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .news-card p {
+        font-size: 1rem;
+        color: #555;
+    }

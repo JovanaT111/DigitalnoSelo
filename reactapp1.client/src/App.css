@@ -147,37 +147,6 @@ body {
                 text-decoration: none;
             }
 
-.hero {
-    position: relative;
-    background-color: cornflowerblue;
-    background-size: cover;
-    background-position: center;
-    height: 50vh;
-    color: white;
-}
-
-    .hero h2 {
-        padding-top: 50px;
-        font-size: 3em;
-    }
-
-    .hero p {
-        font-size: 1.5em;
-    }
-
-    .hero button {
-        padding: 15px 30px;
-        background-color: #FF5733;
-        color: white;
-        border: none;
-        font-size: 1.1em;
-        cursor: pointer;
-    }
-
-        .hero button:hover {
-            background-color: #C70039;
-        }
-
 .features {
     padding: 50px 20px;
     background-color: #f4f4f4;
@@ -242,7 +211,7 @@ body {
 
     .news-card img {
         width: 100%;
-        max-height: 200px; 
+        max-height: 200px;
         object-fit: cover;
         margin-bottom: 1rem;
     }
@@ -256,3 +225,93 @@ body {
         font-size: 1rem;
         color: #555;
     }
+
+.hero-content {
+    max-width: 100%;
+    color: white;
+}
+
+.hero-image {
+    width: 100%;
+    height: auto;
+}
+
+.section {
+    width: 100%;
+    padding: 4rem 1rem;
+    background-color: white;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3rem;
+}
+
+.text-content {
+    text-align: center;
+}
+
+.subheading {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #4B5563;
+    margin-bottom: 0.5rem;
+}
+
+.main-heading {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #1F2937;
+    margin-bottom: 3rem;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+}
+
+@media (min-width: 640px) {
+    .grid-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 768px) {
+    .grid-container {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.grid-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 0 1rem;
+    max-width: 18rem;
+    margin: 0 auto;
+}
+
+.icon-container {
+    background-color: #F3F4F6;
+    border-radius: 50%;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    color: #10B981;
+    font-size: 2rem;
+}
+
+.item-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.item-description {
+    color: #4B5563;
+}

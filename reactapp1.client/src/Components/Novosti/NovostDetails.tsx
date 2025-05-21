@@ -5,7 +5,7 @@ import axios from 'axios';
 interface Novost {
     id: number;
     naslov: string;
-    opis: string;
+    opis: string;  // HTML content from React-Quill
     slikaUrl?: string;
 }
 
@@ -36,13 +36,26 @@ const NovostDetails: React.FC = () => {
         <div style={{ padding: '1rem' }}>
             <h1>{novost.naslov}</h1>
             {novost.slikaUrl && (
-                <img
-                    src={`https://localhost:7249${novost.slikaUrl}`}
-                    alt={novost.naslov}
-                    style={{ width: '100%', maxHeight: '400px', objectFit: 'cover' }}
-                />
+                <div style={{ overflow: 'hidden', borderRadius: '8px' }}>
+                    <img
+                        src={`https://localhost:7249${novost.slikaUrl}`}
+                        alt={novost.naslov}
+                        style={{
+                            width: '100%',
+                            height: 'auto',
+                            maxHeight: '500px',
+                            objectFit: 'cover',
+                            borderRadius: '8px',
+                            marginBottom: '1rem',
+                        }}
+                    />
+                </div>
             )}
-            <p>{novost.opis}</p>
+
+            <div
+                dangerouslySetInnerHTML={{ __html: novost.opis }}
+                style={{ fontSize: '16px', lineHeight: '1.5' }}
+            />
         </div>
     );
 };

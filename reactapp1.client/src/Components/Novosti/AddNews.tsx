@@ -1,8 +1,10 @@
 ﻿import React, { useState } from 'react';
 import axios from 'axios';
 import { TextField, Button, Input, Typography, Grid, Container, Snackbar } from '@mui/material';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
-const AddNews: React.FC<{ seloId: number, onClose: () => void }> = ({ seloId, onClose, onNewsAdded }) => {
+const AddNews: React.FC<{ seloId: number, onClose: () => void, onNewsAdded: () => void }> = ({ seloId, onClose, onNewsAdded }) => {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [photo, setPhoto] = useState<File | null>(null);
@@ -55,15 +57,28 @@ const AddNews: React.FC<{ seloId: number, onClose: () => void }> = ({ seloId, on
                     </Grid>
 
                     <Grid item xs={12}>
-                        <TextField
-                            label="Opis"
-                            variant="outlined"
-                            fullWidth
-                            multiline
-                            rows={4}
+                        <ReactQuill
                             value={description}
-                            onChange={(e) => setDescription(e.target.value)}
-                            required
+                            onChange={setDescription}
+                            modules={{
+                                toolbar: [
+                                    [{ 'header': '1' }, { 'header': '2' }, { 'font': [] }],
+                                    [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                                    ['bold', 'italic', 'underline'],
+                                    ['link'],
+                                    [{ 'align': [] }],
+                                    ['image'],
+                                    ['blockquote', 'code-block']
+                                ],
+                            }}
+                            placeholder="Unesite opis novosti..."
+                            style={{
+                                height: '200px',  
+                                width: '100%',
+                                overflowY: 'auto',
+                                border: '1px solid #ccc',
+                                borderRadius: '8px',
+                            }}
                         />
                     </Grid>
 

@@ -91,6 +91,7 @@ const SeloProfil: React.FC<VillageProfileProps> = ({
                 });
 
                 alert(`${type} uploaded successfully!`);
+                window.location.reload();
             } catch (error) {
                 console.error(`Error uploading ${type}:`, error);
                 alert(`Failed to upload ${type}.`);
@@ -118,6 +119,7 @@ const SeloProfil: React.FC<VillageProfileProps> = ({
                 );
 
                 alert(`${type} uploaded successfully!`);
+                window.location.reload();
             } catch (error) {
                 console.error(`Error uploading ${type}:`, error);
                 alert(`Failed to upload ${type}.`);
@@ -145,7 +147,7 @@ const SeloProfil: React.FC<VillageProfileProps> = ({
                 );
 
                 alert('Documents uploaded successfully!');
-                console.log(response.data);
+                window.location.reload();
             } catch (error) {
                 console.error('Error uploading documents:', error);
                 alert('Failed to upload documents.');
@@ -174,7 +176,9 @@ const SeloProfil: React.FC<VillageProfileProps> = ({
                 <Tab label="Poljoprivreda & Turizam" />
                 <Tab label="Društvene mreže" />
                 <Tab label="Stepen razvijenosti" />
-                <Tab label="Slike & Dokumenti" />
+                <Tab label="Logo" />
+                <Tab label="Slike" />
+                <Tab label="Dokumenti" />
             </Tabs>
 
             {tabIndex === 0 && (
@@ -401,11 +405,10 @@ const SeloProfil: React.FC<VillageProfileProps> = ({
             {tabIndex === 5 && (
                 <Card sx={{ mb: 4 }}>
                     <CardContent>
-                        <Typography variant="h6">Slike & Dokumenti</Typography>
+                        <Typography variant="h6">Logo</Typography>
                         <Divider sx={{ mb: 2 }} />
                         <Grid container spacing={2}>
                             <Grid item xs={12}>
-                                <Typography variant="body1">Logo</Typography>
                                 {images.length > 0 && images.some(img => img.isLogo) ? (
                                     <img
                                         src={`https://localhost:7249/uploads/${images.find(img => img.isLogo)?.path.split('/').pop()}`}
@@ -423,8 +426,17 @@ const SeloProfil: React.FC<VillageProfileProps> = ({
                                     </Button>
                                 )}
                             </Grid>
+                        </Grid>
+                    </CardContent>
+                </Card>
+            )}
+
+            {tabIndex === 6 && (
+                <Card sx={{ mb: 4 }}>
+                    <CardContent>
+                        <Divider sx={{ mb: 2 }} />
+                        <Grid container spacing={2}>
                             <Grid item xs={12}>
-                                <Typography variant="body1">Photos</Typography>
                                 {editMode && (
                                     <Button variant="contained" component="label" sx={{ mb: 2 }}>
                                         Upload Photos
@@ -446,9 +458,18 @@ const SeloProfil: React.FC<VillageProfileProps> = ({
                                         ))}
                                 </Grid>
                             </Grid>
-                            <Grid item xs={12}>
-                                <Typography variant="body1">Documents</Typography>
+                        </Grid>
+                    </CardContent>
+                </Card>
+            )}
 
+            {tabIndex === 7 && (
+                <Card sx={{ mb: 4 }}>
+                    <CardContent>
+                        <Typography variant="h6">Dokumenti</Typography>
+                        <Divider sx={{ mb: 2 }} />
+                        <Grid container spacing={2}>
+                            <Grid item xs={12}>
                                 {editMode && (
                                     <Button variant="contained" component="label">
                                         Upload Document

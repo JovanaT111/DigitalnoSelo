@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+﻿/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
@@ -72,9 +72,24 @@ const NovostiLista: React.FC = () => {
                                     }}
                                 />
                                 <h3>{novost.naslov}</h3>
-                                <p>
-                                    {novost.opis.length > 150 ? `${novost.opis.substring(0, 150)}...` : novost.opis}
-                                </p>
+                                {novost.opis.length > 150 ? (
+                                    <div>
+                                        <p
+                                            dangerouslySetInnerHTML={{
+                                                __html: novost.opis.length > 150 ? `${novost.opis.substring(0, 150)}...` : novost.opis,
+                                            }}
+                                        />
+                                        <Button onClick={() => navigate(`/new/${novost.id}`)} variant="text" color="primary">
+                                            Pročitaj više
+                                        </Button>
+                                    </div>
+                                ) : (
+                                        <p
+                                            dangerouslySetInnerHTML={{
+                                                __html: novost.opis.length > 150 ? `${novost.opis.substring(0, 150)}...` : novost.opis,
+                                            }}
+                                        />
+                                )}
                             </div>
                         </div>
                     ))}

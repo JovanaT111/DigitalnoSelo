@@ -1,5 +1,7 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+﻿/* eslint-disable @typescript-eslint/no-explicit-any */
+import { Button } from '@mui/material';
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 interface Novost {
     id: number;
@@ -10,6 +12,7 @@ interface Novost {
 const Features: React.FC = () => {
     const [news, setNews] = useState<Novost[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchNews = async () => {
@@ -55,7 +58,24 @@ const Features: React.FC = () => {
                                 />
                             <h3>{novost.naslov}</h3>
                             <p>
-                                {novost.opis.length > 150 ? `${novost.opis.substring(0, 150)}...` : novost.opis}
+                                    {novost.opis.length > 150 ? (
+                                        <div>
+                                            <p
+                                                dangerouslySetInnerHTML={{
+                                                    __html: novost.opis.length > 150 ? `${novost.opis.substring(0, 150)}...` : novost.opis,
+                                                }}
+                                            />
+                                            <Button onClick={() => navigate(`/new/${novost.id}`)} variant="text" color="primary">
+                                                Pročitaj više
+                                            </Button>
+                                        </div>
+                                    ) : (
+                                        <p
+                                            dangerouslySetInnerHTML={{
+                                                __html: novost.opis.length > 150 ? `${novost.opis.substring(0, 150)}...` : novost.opis,
+                                            }}
+                                        />
+                                    )}
                             </p>
                         </div>
                     ))}

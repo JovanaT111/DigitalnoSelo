@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Container, Box, Avatar, Typography, TextField, Button, CssBaseline, Grid } from "@mui/material";
+import { Container, Box, Avatar, Typography, TextField, Button, CssBaseline, Grid, IconButton, InputAdornment } from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 function Login() {
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const [rememberme, setRememberme] = useState<boolean>(false);
     const [error, setError] = useState<string>("");
+    const [showPassword, setShowPassword] = useState<boolean>(false); // State to toggle password visibility
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -69,9 +71,7 @@ function Login() {
                             alignItems: "center",
                         }}
                     >
-                        <Avatar sx={{ m: 1, bgcolor: "primary.light" }}>
-
-                        </Avatar>
+                        <Avatar sx={{ m: 1, bgcolor: "primary.light" }} />
                         <Typography variant="h5">Prijavi se</Typography>
                         <Box sx={{ mt: 1 }}>
                             <form onSubmit={handleLogin}>
@@ -94,10 +94,22 @@ function Login() {
                                     id="password"
                                     name="password"
                                     label="Lozinka"
-                                    type="password"
+                                    type={showPassword ? "text" : "password"} // Toggle password visibility
                                     value={password}
                                     onChange={(e) => {
                                         setPassword(e.target.value);
+                                    }}
+                                    InputProps={{
+                                        endAdornment: (
+                                            <InputAdornment position="end">
+                                                <IconButton
+                                                    onClick={() => setShowPassword(!showPassword)} // Toggle the state
+                                                    edge="end"
+                                                >
+                                                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                                                </IconButton>
+                                            </InputAdornment>
+                                        ),
                                     }}
                                 />
 

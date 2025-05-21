@@ -72,7 +72,7 @@ function Login() {
                         <Avatar sx={{ m: 1, bgcolor: "primary.light" }}>
 
                         </Avatar>
-                        <Typography variant="h5">Login</Typography>
+                        <Typography variant="h5">Prijavi se</Typography>
                         <Box sx={{ mt: 1 }}>
                             <form onSubmit={handleLogin}>
                                 <TextField
@@ -80,7 +80,7 @@ function Login() {
                                     required
                                     fullWidth
                                     id="email"
-                                    label="Email Address"
+                                    label="Email Adresa"
                                     name="email"
                                     autoFocus
                                     value={email}
@@ -93,7 +93,7 @@ function Login() {
                                     fullWidth
                                     id="password"
                                     name="password"
-                                    label="Password"
+                                    label="Lozinka"
                                     type="password"
                                     value={password}
                                     onChange={(e) => {
@@ -109,7 +109,7 @@ function Login() {
                                         checked={rememberme}
                                         onChange={handleChange}
                                     />
-                                    <span>Remember Me</span>
+                                    <span>Zapamti me</span>
                                 </div>
 
                                 <Button
@@ -118,7 +118,7 @@ function Login() {
                                     sx={{ mt: 3, mb: 2 }}
                                     type="submit"
                                 >
-                                    Login
+                                    Prijava
                                 </Button>
                             </form>
 

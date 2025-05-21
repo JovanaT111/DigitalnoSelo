@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using ReactApp1.Server.Data;
 using ReactApp1.Server.Models;
 using ReactApp1.Server.Models.ReactApp1.Server.Models;
+using ReactApp1.Server.Models.ViewModel;
 
 [Route("api/[controller]")]
 [ApiController]

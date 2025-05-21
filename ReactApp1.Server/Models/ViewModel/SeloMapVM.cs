@@ -1,4 +1,4 @@
-﻿namespace ReactApp1.Server.Models
+﻿namespace ReactApp1.Server.Models.ViewModel
 {
     public class SeloMapVM
     {

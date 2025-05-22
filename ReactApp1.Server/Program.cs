@@ -1,4 +1,4 @@
-
+﻿
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ReactApp1.Server.Data;
@@ -78,8 +78,10 @@ namespace ReactApp1.Server
 
             app.MapGet("/pingauth", (ClaimsPrincipal user) =>
             {
-                var email = user.FindFirstValue(ClaimTypes.Email); // get the user's email from the claim
-                return Results.Json(new { Email = email }); ; // return the email as a plain text response
+                var email = user.FindFirstValue(ClaimTypes.Email);
+                var role = user.FindFirstValue(ClaimTypes.Role);
+
+                return Results.Json(new { Email = email, Role = role });
             }).RequireAuthorization();
 
 

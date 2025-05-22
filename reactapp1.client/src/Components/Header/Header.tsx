@@ -1,9 +1,11 @@
-﻿import React from 'react';
+﻿import React, { useContext } from 'react';
 import { AuthorizedUser } from '../AuthorizeView';
 import LogoutLink from '../LogoutLink';
-import { Link } from 'react-router-dom';
+import { UserContext } from '../AuthorizeView'; 
 
 const Header: React.FC = () => {
+    const user: any = useContext(UserContext); 
+    const role = user?.role;
     return (
         <header className="header">
             <div className="logo">
@@ -12,8 +14,12 @@ const Header: React.FC = () => {
             <nav>
                 <ul>
                     <li><a href="#hero">Početna</a></li>
-                    <li><Link to="/villages">Sela</Link></li>
-                    <li><a href="/users">Korisnici</a></li>
+                    {role === 'Admin' && (
+                        <li><a href="/users">Korisnici</a></li>
+                    )}
+                    {role === 'Admin' && (
+                        <li><a href="/villages">Sela</a></li>
+                    )}
                     <span><LogoutLink>Odjava, <AuthorizedUser value="email" /></LogoutLink></span>
                 </ul>
             </nav>

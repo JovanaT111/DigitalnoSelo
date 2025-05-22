@@ -1,22 +1,22 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable prefer-const */
 import React, { useState, useEffect, createContext } from 'react';
 import { Navigate } from 'react-router-dom';
 
-
-const UserContext = createContext({});
+export const UserContext = createContext<User>({ email: '', role: '' });
 
 interface User {
     email: string;
+    role: string;
 }
-
 
 function AuthorizeView(props: { children: React.ReactNode }) {
 
     const [authorized, setAuthorized] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(true); // add a loading state
-    let emptyuser: User = { email: "" };
+    let emptyuser: User = { email: "", role: "" };
 
     const [user, setUser] = useState(emptyuser);
-
 
     useEffect(() => {
         // Get the cookie value
@@ -37,13 +37,11 @@ function AuthorizeView(props: { children: React.ReactNode }) {
 
                 // check the status code
                 if (response.status == 200) {
-                    console.log("Authorized");
                     let j: any = await response.json();
-                    setUser({ email: j.email });
+                    setUser({ email: j.email, role: j.role });
                     setAuthorized(true);
                     return response; // return the response
                 } else if (response.status == 401) {
-                    console.log("Unauthorized");
                     return response; // return the response
                 } else {
                     // throw an error to trigger the catch block
@@ -77,7 +75,6 @@ function AuthorizeView(props: { children: React.ReactNode }) {
             });
     }, []);
 
-
     if (loading) {
         return (
             <>
@@ -104,14 +101,16 @@ function AuthorizeView(props: { children: React.ReactNode }) {
 }
 
 export function AuthorizedUser(props: { value: string }) {
-    // Consume the username from the UserContext
+    // Consume the user info (email, role) from the UserContext
     const user: any = React.useContext(UserContext);
 
-    // Display the username in a h1 tag
-    if (props.value == "email")
+    if (props.value === "email") {
         return <>{user.email}</>;
-    else
-        return <></>
+    } else if (props.value === "role") {
+        return <>{user.role}</>;
+    } else {
+        return <></>;
+    }
 }
 
 export default AuthorizeView;

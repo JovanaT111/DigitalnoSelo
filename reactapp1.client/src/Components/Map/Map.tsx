@@ -19,7 +19,6 @@ const Map: React.FC = () => {
     useEffect(() => {
         axios.get<SeloMapVM[]>('https://localhost:7249/api/Selo/coordinates')
             .then(response => {
-                console.log(response.data);
                 setSeloCoordinates(response.data);
             })
             .catch(error => {

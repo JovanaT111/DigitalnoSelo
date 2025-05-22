@@ -47,6 +47,7 @@ namespace ReactApp1.Server.Controllers
             {
                 UserName = newUser.Email,
                 Email = newUser.Email,
+                NormalizedUserName = newUser.Email.ToUpper(),
                 PasswordHash = hashedPassword,
                 FirstName = newUser.FirstName,
                 LastName = newUser.LastName,

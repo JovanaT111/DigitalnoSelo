@@ -25,10 +25,10 @@ const DeleteSeloModal: React.FC<DeleteSeloModalProps> = ({ open, onClose, onDele
             boxShadow: 24,
             p: 4
         }}>
-            <Typography variant="h6" gutterBottom>Da li ste sigurni da želite da obrišete ovo selo?</Typography>
+            <Typography variant="h6" gutterBottom>Da li ste sigurni da zelite da obrisete ovo selo?</Typography>
             <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                 <Button variant="outlined" color="error" onClick={onDelete}>
-                    Obriši
+                    Obrisi
                 </Button>
                 <Button variant="outlined" color="primary" onClick={onClose}>
                     Otkazi

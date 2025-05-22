@@ -30,7 +30,6 @@ namespace ReactApp1.Server.Data
                 if (user == null)
                 {
                     await userManager.CreateAsync(defaultUser, "Test123+");
-                    await userManager.AddToRoleAsync(defaultUser, Enums.Roles.Basic.ToString());
                     await userManager.AddToRoleAsync(defaultUser, Enums.Roles.Admin.ToString());
                 }
             }

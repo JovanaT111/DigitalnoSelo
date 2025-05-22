@@ -63,8 +63,12 @@ const SeloProfil: React.FC<VillageProfileProps> = ({
 
     const handleProfileUpdate = async () => {
         try {
-            await axios.put(`https://localhost:7249/api/Selo/${routeSeloId}`, selectedSelo);
-            alert('Profil sela je uspješno ažuriran.');
+            if (editMode) {
+                await axios.put(`https://localhost:7249/api/Selo/${routeSeloId}`, selectedSelo);
+                alert('Profil sela je uspješno ažuriran.');
+            } else {
+                window.history.back();
+            }
         } catch (error) {
             console.error('Greška prilikom ažuriranja profila sela:', error);
             alert('Došlo je do greške prilikom ažuriranja profila.');
@@ -156,19 +160,20 @@ const SeloProfil: React.FC<VillageProfileProps> = ({
     };
 
     return (
-        <Box sx={{ width: '100vw', minHeight: '100vh', padding: 0, margin: 0 }}>
-            <Typography variant="h6" gutterBottom>
-                {editMode ? 'Izmijeni profil sela' : 'Profil sela'}
-            </Typography>
-
-            <Button
-                variant="contained"
-                component={Link}
-                to={`/news/${routeSeloId}`}
-                sx={{ mb: 2 }}
-            >
-                Idi na novosti
-            </Button>
+        <Box sx={{ width: '100vw', minHeight: '100vh', padding: 10, margin: 0 }}>
+            <Box display="flex" alignItems="center" justifyContent="space-between" mb={2}>
+                <Typography variant="h4" gutterBottom sx={{ textAlign: 'center', flex: 1 }}>
+                    {editMode ? 'Izmijeni profil sela' : 'Profil sela'}
+                </Typography>
+                <Button
+                    variant="contained"
+                    component={Link}
+                    to={`/news/${routeSeloId}`}
+                    sx={{ ml: 2 }}
+                >
+                    Idi na novosti
+                </Button>
+            </Box>
 
             <Tabs value={tabIndex} onChange={handleTabChange} sx={{ mb: 3 }}>
                 <Tab label="Opšte informacije" />
@@ -438,7 +443,8 @@ const SeloProfil: React.FC<VillageProfileProps> = ({
                         <Grid container spacing={2}>
                             <Grid item xs={12}>
                                 {editMode && (
-                                    <Button variant="contained" component="label" sx={{ mb: 2 }}>
+                                    <Button variant="contained" component="label" sx={{ mb: 2 }} disabled={images
+                                        .filter(img => !img.isLogo && !img.isFile).length >= 5}>
                                         Upload Photos
                                         <input type="file" hidden multiple onChange={(e) => handleFilesUpload(e, 'photos')} />
                                     </Button>
@@ -471,7 +477,8 @@ const SeloProfil: React.FC<VillageProfileProps> = ({
                         <Grid container spacing={2}>
                             <Grid item xs={12}>
                                 {editMode && (
-                                    <Button variant="contained" component="label">
+                                    <Button variant="contained" component="label" disabled={images
+                                        .filter((doc) => doc.isFile).length >= 5}>
                                         Upload Document
                                         <input type="file" hidden multiple onChange={(e) => handleDocumentsUpload(e)} />
                                     </Button>

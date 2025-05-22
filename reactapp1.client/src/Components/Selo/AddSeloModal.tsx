@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useEffect } from 'react';
-import { Button, Modal, Box, Typography, TextField, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
+import { Button, Modal, Box, Typography, TextField, FormControl, InputLabel, MenuItem, Select, DialogActions } from '@mui/material';
 import { DodajSelo } from './SeloList';
 import axios from 'axios';
 
@@ -110,9 +110,14 @@ const AddSeloModal: React.FC<AddSeloModalProps> = ({
                         ))}
                     </Select>
                 </FormControl>
-                <Button variant="contained" color="primary" onClick={handleAddSelo} sx={{ mt: 2 }}>
-                    Dodaj
-                </Button>
+                <DialogActions>
+                    <Button onClick={onClose} color="primary">
+                        Otkazi
+                    </Button>
+                    <Button onClick={handleAddSelo} color="primary">
+                        Dodaj
+                    </Button>
+                </DialogActions>
             </Box>
         </Modal>
     );

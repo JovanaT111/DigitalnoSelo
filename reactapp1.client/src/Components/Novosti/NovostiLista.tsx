@@ -1,10 +1,10 @@
-﻿/* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect, useState } from 'react';
+﻿import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Typography } from '@mui/material';
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Typography } from '@mui/material';
 import AddNews from './AddNews';
 import { useNavigate } from 'react-router-dom';
+import HeroSection from '../HeroSection/HeroSection';
 
 interface Novost {
     id: number;
@@ -46,11 +46,17 @@ const NovostiLista: React.FC = () => {
 
     return (
         <section id="features" className="news">
-            <h2>Novosti</h2>
+            <HeroSection imageSrc="../src/assets/aktuelno.jpg" />
             {loading ? (
                 <p>Loading...</p>
             ) : error ? (
                 <p>{error}</p>
+            ) : news.length === 0 ? (
+                <Box padding={3}>
+                    <Typography variant="h4" mt={60} color="textSecondary">
+                        Nema novosti za ovo selo.
+                    </Typography>
+                </Box>
             ) : (
                 <div className="news-cards">
                     {news.map((novost) => (
@@ -67,6 +73,7 @@ const NovostiLista: React.FC = () => {
                                     style={{
                                         width: '100%',
                                         maxHeight: '300px',
+                                        minHeight: '300px',
                                         objectFit: 'cover',
                                         marginBottom: '1rem',
                                     }}
@@ -84,11 +91,11 @@ const NovostiLista: React.FC = () => {
                                         </Button>
                                     </div>
                                 ) : (
-                                        <p
-                                            dangerouslySetInnerHTML={{
-                                                __html: novost.opis.length > 150 ? `${novost.opis.substring(0, 150)}...` : novost.opis,
-                                            }}
-                                        />
+                                    <p
+                                        dangerouslySetInnerHTML={{
+                                            __html: novost.opis.length > 150 ? `${novost.opis.substring(0, 150)}...` : novost.opis,
+                                        }}
+                                    />
                                 )}
                             </div>
                         </div>

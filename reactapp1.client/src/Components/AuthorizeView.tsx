@@ -14,7 +14,7 @@ function AuthorizeView(props: { children: React.ReactNode }) {
 
     const [authorized, setAuthorized] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(true); // add a loading state
-    let emptyuser: User = { email: "", role: "" };
+    let emptyuser: User = { email: "", role: ""};
 
     const [user, setUser] = useState(emptyuser);
 

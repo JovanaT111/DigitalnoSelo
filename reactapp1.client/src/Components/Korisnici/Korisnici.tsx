@@ -5,6 +5,7 @@ import {
     CircularProgress, Grid, Typography, Box, Alert, Button
 } from '@mui/material';
 import DodajKorisnika, { ApplicationUser } from './DodajKorisnika';
+import HeroSection from '../HeroSection/HeroSection';
 
 const Korisnici: React.FC = () => {
     const [users, setUsers] = useState<ApplicationUser[]>([]);
@@ -56,12 +57,23 @@ const Korisnici: React.FC = () => {
     }
 
     return (
-        <Box padding={3}>
+        <Box padding={3} mt={10}>
+        <HeroSection imageSrc="../src/assets/korisnici.jpg" />
             <Grid container spacing={3}>
                 <Grid item xs={12}>
-                    <Typography variant="h4" gutterBottom>
-                        Korisnici
-                    </Typography>
+                    <Grid item xs={12}>
+                        <Box display="flex" alignItems="center" justifyContent="space-between" mb={3}>
+                            <Box flex={1} />
+                            <Typography variant="h4" align="center" sx={{ flex: 1 }}>
+                                Korisnici
+                            </Typography>
+                            <Box flex={1} display="flex" justifyContent="flex-end">
+                                <Button variant="contained" color="primary" onClick={handleClickOpen}>
+                                    Dodaj korisnika
+                                </Button>
+                            </Box>
+                        </Box>
+                    </Grid>
                 </Grid>
                 <Grid item xs={12}>
                     <TableContainer component={Paper}>
@@ -85,13 +97,6 @@ const Korisnici: React.FC = () => {
                 </Grid>
             </Grid>
 
-            <Box position="absolute" top={16} right={16}>
-                <Button variant="contained" color="primary" onClick={handleClickOpen}>
-                    Dodaj korisnika
-                </Button>
-            </Box>
-
-            {/* Modal za dodavanje korisnika */}
             <DodajKorisnika
                 open={open}
                 onClose={handleClose}

@@ -9,6 +9,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { useNavigate } from 'react-router-dom';
 import AddSeloModal from './AddSeloModal';
 import DeleteSeloModal from './DeleteSeloModal';
+import HeroSection from '../HeroSection/HeroSection';
 
 interface Selo {
     id: number;
@@ -125,12 +126,19 @@ const SeloList: React.FC = () => {
 
     return (
         <div>
-            <Typography variant="h4" gutterBottom>Lista Sela</Typography>
-            <Box sx={{ position: 'absolute', top: 16, right: 16 }}>
-                <Button variant="contained" color="primary" onClick={() => setOpen(true)}>Dodaj novo selo</Button>
+            <HeroSection imageSrc="../src/assets/selo.jpg" />
+            <Box display="flex" alignItems="center" justifyContent="space-between" mb={3} mt={10}>
+                <Box flex={1} />
+                <Typography variant="h4" align="center" sx={{ flex: 1 }}>
+                    Digitalna Sela
+                </Typography>
+                <Box flex={1} display="flex" justifyContent="flex-end">
+                    <Button variant="contained" color="primary" onClick={() => setOpen(true)}>
+                        Dodaj novo selo
+                    </Button>
+                </Box>
             </Box>
 
-            {/* Render modals */}
             <AddSeloModal
                 open={open}
                 onClose={() => setOpen(false)}
@@ -149,7 +157,6 @@ const SeloList: React.FC = () => {
                 onDelete={deleteSelo}
             />
 
-            {/* Village Table */}
             <TableContainer component={Paper}>
                 <Table aria-label="simple table">
                     <TableHead>

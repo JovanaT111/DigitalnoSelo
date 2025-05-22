@@ -38,6 +38,20 @@ public class SeloController : ControllerBase
         return selo;
     }
 
+    [HttpPost("byEmail")]
+    public async Task<ActionResult<IEnumerable<Selo>>> GetSelaByEmail([FromBody] EmailRequest request)
+    {
+        var sela = await _context.Sela.Where(s => s.OvlasceniKorisnik == request.Email)
+                                      .ToListAsync();
+
+        if (sela == null || sela?.Count == 0)
+        {
+            return NotFound("No villages found for this email.");
+        }
+
+        return Ok(sela);
+    }
+
     // POST: api/Selo
     [HttpPost]
     public async Task<ActionResult<Selo>> PostSelo(Selo selo)

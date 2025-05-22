@@ -1,10 +1,14 @@
 ﻿import React from 'react';
 
-const HeroSection: React.FC = () => {
+interface HeroSectionProps {
+    imageSrc: string;
+}
+
+const HeroSection: React.FC<HeroSectionProps> = ({ imageSrc }) => {
     return (
         <section id="hero" className="hero">
             <div className="hero-content">
-                <img src="../src/assets/home.png" alt="Hero Image" className="hero-image" />
+                <img src={imageSrc} alt="Hero Image" className="hero-image" />
             </div>
         </section>
     );

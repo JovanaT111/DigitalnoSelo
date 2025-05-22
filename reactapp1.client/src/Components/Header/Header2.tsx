@@ -7,14 +7,17 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import { AuthorizedUser } from '../AuthorizeView';
 import LogoutLink from '../LogoutLink';
 import { UserContext } from '../AuthorizeView';
+import { useNavigate } from 'react-router-dom';
 
 const Header2: React.FC = () => {
     const user: any = useContext(UserContext);
     const role = user?.role;
+    const navigate = useNavigate();
+
     return (
         <Navbar expand="lg" className="bg-body-tertiary">
             <Container>
-                <Navbar.Brand href="#home" className="d-flex">
+                <Navbar.Brand onClick={() => navigate('/')} className="d-flex">
                     <img
                         src="../src/assets/logo_digitalno_selo.png"
                         alt="Logo"
@@ -24,9 +27,10 @@ const Header2: React.FC = () => {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="ms-auto">
-                        {role === 'Admin' && <Nav.Link href="/users">Korisnici</Nav.Link>}
-                        {role === 'Admin' && <Nav.Link href="/villages">Sela</Nav.Link>}
-                        <NavDropdown title={
+                        {role === 'Admin' && <Nav.Link style={{ fontWeight: 'bold' }} href="/users">Korisnici</Nav.Link>}
+                        {role === 'Admin' && <Nav.Link style={{ fontWeight: 'bold' }} href="/villages">Sela</Nav.Link>}
+                        {role !== 'Admin' && <Nav.Link style={{ fontWeight: 'bold' }}  href="/my-villages">Moja Sela</Nav.Link>}
+                        <NavDropdown style={{ fontWeight: 'bold' }} title={
                             <>
                                 Zdravo, <AuthorizedUser value="email" />
                             </>

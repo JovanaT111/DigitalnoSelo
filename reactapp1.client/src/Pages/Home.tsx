@@ -1,5 +1,4 @@
 import AuthorizeView from "../Components/AuthorizeView.tsx";
-import Header2 from "../Components/Header/Header2.tsx";
 import HeroSection from "../Components/HeroSection/HeroSection.tsx";
 import Features from "../Components/Features/Features.tsx";
 import Footer from "../Components/Footer/Footer.tsx";
@@ -9,8 +8,7 @@ import TextSection from "../Components/TextSection/TextSection.tsx";
 function Home() {
     return (
         <AuthorizeView>
-            <Header2 />
-            <HeroSection />
+            <HeroSection imageSrc="../src/assets/home.png" />
             <TextSection />
             <Map />
             <Features />

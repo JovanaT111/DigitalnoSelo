@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ReactApp1.Server.Data;
+using ReactApp1.Server.Services;
 using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -30,7 +31,10 @@ namespace ReactApp1.Server
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-            builder.Services.AddSingleton<EmailService>();
+            //builder.Services.AddSingleton<EmailService>();
+            builder.Services.Configure<SendGridSettings>(
+            builder.Configuration.GetSection("SendGridSettings"));
+            builder.Services.AddTransient<IEmailService, SendGridEmailService>();
 
             builder.Services.AddControllers();
 
@@ -80,7 +84,7 @@ namespace ReactApp1.Server
             {
                 var email = user.FindFirstValue(ClaimTypes.Email);
                 var role = user.FindFirstValue(ClaimTypes.Role);
-
+;
                 return Results.Json(new { Email = email, Role = role });
             }).RequireAuthorization();
 

@@ -8,7 +8,7 @@ interface SeloMapVM {
     naziv: string;
     latitude: number;
     longitude: number;
-    id: number; // Assuming each selo has a unique id
+    id: number;
 }
 
 const centerPosition: LatLngExpression = [43.51, 18.25];

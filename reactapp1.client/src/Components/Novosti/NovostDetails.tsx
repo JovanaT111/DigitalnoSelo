@@ -5,7 +5,7 @@ import axios from 'axios';
 interface Novost {
     id: number;
     naslov: string;
-    opis: string;  // HTML content from React-Quill
+    opis: string;
     slikaUrl?: string;
 }
 

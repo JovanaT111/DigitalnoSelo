@@ -3,7 +3,7 @@
 const TextSection: React.FC = () => {
     const items = [
         {
-            icon: "🚀", // Ovde možeš staviti <img src="..." /> ili SVG
+            icon: "🚀",
             title: "MLADI U SLUŽBI DIGITALIZACIJE SELA",
             description:
                 "Grupa mladih, koja uči elektroniku i programiranje, kroz ovaj projekat izlazi iz laboratorija i primjenjuje digitalna rješenja u stvarnim situacijama, pomažući lokalnim poljoprivrednicima i podržavajući razvoj Smart Village modela.",

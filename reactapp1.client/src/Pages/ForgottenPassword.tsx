@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState } from "react";
 import { Container, Box, Avatar, Typography, TextField, Button, CssBaseline, Grid } from "@mui/material";
 import { Link } from "react-router-dom";

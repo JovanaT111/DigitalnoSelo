@@ -15,6 +15,7 @@ import NovostDetails from './Components/Novosti/NovostDetails.tsx';
 import Layout from './Layout.tsx';
 import ResetPassword from './Pages/ResetPassword.tsx';
 import MojaSela from './Components/Selo/MojaSela.tsx';
+import DrzaveGradovi from './Pages/DrzaveGradovi.tsx';
 
 function App() {
     return (
@@ -27,13 +28,14 @@ function App() {
 
                 <Route element={<Layout />}>
                     <Route path="/" element={<Home />} />
+                    <Route path="/sifarnici" element={<DrzaveGradovi />} />
                     <Route path="/villages" element={<SeloList />} />
                     <Route path="/my-villages" element={<MojaSela />} />
                     <Route path="/view/:id" element={<SeloProfil editMode={false} />} />
                     <Route path="/edit/:id" element={<SeloProfil editMode={true} />} />
                     <Route path="/news/:id" element={<NovostiLista />} />
                     <Route path="/new/:id" element={<NovostDetails />} />
-                    <Route path="/add-news" element={<AddNews seloId={0} />} />
+                    <Route path="/add-news" element={<AddNews seloId={0} onClose={() => console.log('Close called')} onNewsAdded={() => console.log('News added')} />} />
                     <Route path="/users" element={<Korisnici />} />
                 </Route>
             </Routes>

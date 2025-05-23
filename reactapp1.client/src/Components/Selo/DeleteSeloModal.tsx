@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { Button, Modal, Box, Typography } from '@mui/material';
 
 interface DeleteSeloModalProps {
@@ -25,13 +25,13 @@ const DeleteSeloModal: React.FC<DeleteSeloModalProps> = ({ open, onClose, onDele
             boxShadow: 24,
             p: 4
         }}>
-            <Typography variant="h6" gutterBottom>Da li ste sigurni da zelite da obrisete ovo selo?</Typography>
+            <Typography variant="h6" gutterBottom>Da li ste sigurni da želite da obrišete ovo selo?</Typography>
             <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                 <Button variant="outlined" color="error" onClick={onDelete}>
-                    Obrisi
+                    Obriši
                 </Button>
                 <Button variant="outlined" color="primary" onClick={onClose}>
-                    Otkazi
+                    Otkaži
                 </Button>
             </Box>
         </Box>

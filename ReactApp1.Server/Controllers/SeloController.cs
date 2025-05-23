@@ -93,6 +93,41 @@ public class SeloController : ControllerBase
         return NoContent();
     }
 
+    [HttpPost("country")]
+    public async Task<IActionResult> CreateCountry([FromBody] Countries country)
+    {
+        _context.Countries.Add(country);
+        await _context.SaveChangesAsync();
+
+        return CreatedAtAction(nameof(GetCountries), new { id = country.Id }, country);
+    }
+
+    [HttpPost("city")]
+    public async Task<IActionResult> CreateCity([FromBody] CityDto dto)
+    {
+        var country = await _context.Countries.FindAsync(dto.CountriesId);
+        if (country == null)
+            return NotFound("Država nije pronađena.");
+
+        var city = new Cities
+        {
+            Name = dto.Name,
+            CountriesId = dto.CountriesId,
+            Country = country
+        };
+
+        _context.Cities.Add(city);
+        await _context.SaveChangesAsync();
+
+        return CreatedAtAction(nameof(GetCities), new { id = city.Id }, new
+        {
+            city.Id,
+            city.Name,
+            countryId = country.Id,
+            countryName = country.Name
+        });
+    }
+
     // GET: api/Selo/countries
     [HttpGet("countries")]
     public async Task<ActionResult<IEnumerable<Countries>>> GetCountries()
@@ -104,7 +139,17 @@ public class SeloController : ControllerBase
     [HttpGet("cities")]
     public async Task<ActionResult<IEnumerable<Cities>>> GetCities()
     {
-        return await _context.Cities.ToListAsync();
+        var cities = await _context.Cities
+        .Include(c => c.Country)
+        .Select(c => new {
+            c.Id,
+            c.Name,
+            c.CountriesId,
+            CountryName = c.Country.Name
+        })
+        .ToListAsync();
+
+        return Ok(cities);
     }
 
     // GET: api/Selo/countries/{id}/cities
@@ -249,6 +294,26 @@ public class SeloController : ControllerBase
         }
 
         return Ok(images);
+    }
+
+    [HttpDelete("{seloId}/images/{id}")]
+    public async Task<IActionResult> DeleteImage(int id)
+    {
+        var image = await _context.SeloImages.FindAsync(id);
+        if (image == null)
+            return NotFound();
+
+        var imagePath = Path.Combine("wwwroot/uploads/documents", image.Path.Replace('/', Path.DirectorySeparatorChar));
+
+        if (System.IO.File.Exists(imagePath))
+        {
+            System.IO.File.Delete(imagePath);
+        }
+
+        _context.SeloImages.Remove(image);
+        await _context.SaveChangesAsync();
+
+        return NoContent();
     }
 
 }

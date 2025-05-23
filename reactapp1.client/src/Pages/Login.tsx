@@ -8,7 +8,7 @@ function Login() {
     const [password, setPassword] = useState<string>("");
     const [rememberme, setRememberme] = useState<boolean>(false);
     const [error, setError] = useState<string>("");
-    const [showPassword, setShowPassword] = useState<boolean>(false); // State to toggle password visibility
+    const [showPassword, setShowPassword] = useState<boolean>(false);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;

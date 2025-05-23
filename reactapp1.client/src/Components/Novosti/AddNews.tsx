@@ -1,15 +1,15 @@
 ﻿import React, { useState } from 'react';
 import axios from 'axios';
-import { TextField, Button, Input, Typography, Grid, Container, Snackbar } from '@mui/material';
+import { TextField, Button, Input, Typography, Grid, Container } from '@mui/material';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import { toast } from 'react-toastify';
 
 const AddNews: React.FC<{ seloId: number, onClose: () => void, onNewsAdded: () => void }> = ({ seloId, onClose, onNewsAdded }) => {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [photo, setPhoto] = useState<File | null>(null);
     const [document, setDocument] = useState<File | null>(null);
-    const [openSnackbar, setOpenSnackbar] = useState(false);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -21,18 +21,17 @@ const AddNews: React.FC<{ seloId: number, onClose: () => void, onNewsAdded: () =
         if (document) formData.append('Dokument', document);
 
         try {
-            const response = await axios.post(`https://localhost:7249/api/Novosti/${seloId}`, formData, {
+            await axios.post(`https://localhost:7249/api/Novosti/${seloId}`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 }
             });
 
-            console.log('Novost dodana:', response.data);
-            setOpenSnackbar(true);
             setTimeout(() => {
                 onNewsAdded();
                 onClose();
             }, 2000);
+            toast.success('Novost je uspješno dodata!');
         } catch (error) {
             console.error('Greška prilikom dodavanja novosti', error);
         }
@@ -107,13 +106,6 @@ const AddNews: React.FC<{ seloId: number, onClose: () => void, onNewsAdded: () =
                     </Grid>
                 </Grid>
             </form>
-
-            <Snackbar
-                open={openSnackbar}
-                autoHideDuration={2000}  // Auto hide after 2 seconds
-                onClose={() => setOpenSnackbar(false)}
-                message="Novost uspješno dodana!"
-            />
         </Container>
     );
 };

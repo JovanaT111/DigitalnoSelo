@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { Dialog, DialogActions, DialogContent, DialogTitle, TextField, Button, MenuItem, Select, InputLabel, FormControl } from '@mui/material';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 interface DodajKorisnikaProps {
     open: boolean;
     onClose: () => void;
     onAddUser: (newUser: ApplicationUser) => void;
-    villages: string[]; // Assuming villages are passed as props
+    villages: string[];
 }
 
 export interface ApplicationUser {
@@ -14,7 +15,7 @@ export interface ApplicationUser {
     firstName: string;
     lastName: string,
     email: string;
-    villages: string[]; // Assign multiple villages to a user
+    villages: string[];
 }
 
 const DodajKorisnika: React.FC<DodajKorisnikaProps> = ({ open, onClose, onAddUser, villages }) => {
@@ -47,7 +48,8 @@ const DodajKorisnika: React.FC<DodajKorisnikaProps> = ({ open, onClose, onAddUse
             await axios.post('https://localhost:7249/api/usermanager/register', newUser);
             onAddUser(newUser);
             setNewUser({ id: '', firstName: '', lastName: '', email: '', villages: [] }); 
-            onClose(); 
+            onClose();
+            toast.success('Korisnik je uspješno dodat!');
         } catch (err) {
             console.error('Failed to add user:', err);
         }

@@ -1,5 +1,4 @@
-﻿/* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { ChangeEvent, useState, useEffect } from 'react';
+﻿import React, { ChangeEvent, useState, useEffect } from 'react';
 import {
     Box,
     Typography,
@@ -18,15 +17,13 @@ import {
 } from '@mui/material';
 import axios from 'axios';
 import { Link, useParams, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 interface VillageProfileProps {
     editMode: boolean;
-    setEditMode: (edit: boolean) => void;
-    seloId: number;
 }
 
 const SeloProfil: React.FC<VillageProfileProps> = ({
-    seloId,
     editMode
 }) => {
     const [selectedSelo, setSelectedSelo] = useState<any | null>(null);
@@ -65,7 +62,7 @@ const SeloProfil: React.FC<VillageProfileProps> = ({
         try {
             if (editMode) {
                 await axios.put(`https://localhost:7249/api/Selo/${routeSeloId}`, selectedSelo);
-                alert('Profil sela je uspješno ažuriran.');
+                toast.success('Selo je uspješno izmjenjeno!');
             } else {
                 window.history.back();
             }
@@ -81,11 +78,10 @@ const SeloProfil: React.FC<VillageProfileProps> = ({
 
     const handleFileUpload = async (e: ChangeEvent<HTMLInputElement>, type: string) => {
         const file = e.target.files?.[0];
-        if (file) {
+        if (file && routeSeloId !== undefined && routeSeloId !== null) {
             const formData = new FormData();
             formData.append('file', file);
             formData.append('seloId', routeSeloId.toString());
-            console.log(formData);
 
             try {
                 await axios.post(`https://localhost:7249/api/Selo/selo/${routeSeloId}/uploadLogo`, formData, {
@@ -112,7 +108,7 @@ const SeloProfil: React.FC<VillageProfileProps> = ({
             });
 
             try {
-                const response = await axios.post(
+                await axios.post(
                     `https://localhost:7249/api/Selo/selo/${routeSeloId}/uploadPhotos`,
                     formData,
                     {
@@ -140,7 +136,7 @@ const SeloProfil: React.FC<VillageProfileProps> = ({
             });
 
             try {
-                const response = await axios.post(
+                await axios.post(
                     `https://localhost:7249/api/Selo/selo/${routeSeloId}/uploadDocuments`,
                     formData,
                     {
@@ -158,6 +154,17 @@ const SeloProfil: React.FC<VillageProfileProps> = ({
             }
         }
     };
+
+    const handleDeleteImage = async (imgToDelete: { id: any; }) => {
+        try {
+            await axios.delete(`https://localhost:7249/api/selo/${routeSeloId}/images/${imgToDelete.id}`);
+            setImages(prev => prev.filter(img => img !== imgToDelete));
+            window.location.reload();
+        } catch (error) {
+            console.error("Failed to delete image", error);
+        }
+    };
+
 
     return (
         <Box sx={{ width: '100vw', minHeight: '100vh', padding: 10, margin: 0 }}>
@@ -211,7 +218,7 @@ const SeloProfil: React.FC<VillageProfileProps> = ({
                                             label="Ovlašćeni korisnik"
                                             name="ovlasceniKorisnik"
                                             value={selectedSelo?.ovlasceniKorisnik || ''}
-                                            disabled={!editMode}
+                                            disabled
                                             onChange={handleChange}
                                             margin="normal"
                                         />
@@ -439,12 +446,17 @@ const SeloProfil: React.FC<VillageProfileProps> = ({
             {tabIndex === 6 && (
                 <Card sx={{ mb: 4 }}>
                     <CardContent>
+                        <Typography variant="h6">Slike</Typography>
                         <Divider sx={{ mb: 2 }} />
                         <Grid container spacing={2}>
                             <Grid item xs={12}>
                                 {editMode && (
-                                    <Button variant="contained" component="label" sx={{ mb: 2 }} disabled={images
-                                        .filter(img => !img.isLogo && !img.isFile).length >= 5}>
+                                    <Button
+                                        variant="contained"
+                                        component="label"
+                                        sx={{ mb: 2 }}
+                                        disabled={images.filter(img => !img.isLogo && !img.isFile).length >= 5}
+                                    >
                                         Upload Photos
                                         <input type="file" hidden multiple onChange={(e) => handleFilesUpload(e, 'photos')} />
                                     </Button>
@@ -454,11 +466,33 @@ const SeloProfil: React.FC<VillageProfileProps> = ({
                                     {images
                                         .filter(img => !img.isLogo && !img.isFile)
                                         .map((img, index) => (
-                                            <Grid item xs={12} sm={6} md={4} key={index}>
-                                                <img
+                                            <Grid item xs={12} sm={6} md={4} key={index} sx={{ position: 'relative' }}>
+                                                {editMode && (
+                                                    <Button
+                                                        onClick={() => handleDeleteImage(img)}
+                                                        sx={{
+                                                            position: 'absolute',
+                                                            top: 8,
+                                                            right: 8,
+                                                            minWidth: 'unset',
+                                                            padding: '4px',
+                                                            backgroundColor: 'rgba(255,255,255,0.8)',
+                                                            zIndex: 1,
+                                                        }}
+                                                    >
+                                                        ❌
+                                                    </Button>
+                                                )}
+                                                <Box
+                                                    component="img"
                                                     src={`https://localhost:7249/uploads/${img.path.split('/').pop()}`}
                                                     alt={`Selo Photo ${index + 1}`}
-                                                    style={{ width: '100%', borderRadius: 8 }}
+                                                    sx={{
+                                                        width: '100%',
+                                                        height: 200,
+                                                        objectFit: 'cover',
+                                                        borderRadius: 2,
+                                                    }}
                                                 />
                                             </Grid>
                                         ))}
@@ -487,22 +521,36 @@ const SeloProfil: React.FC<VillageProfileProps> = ({
                                 <List>
                                     {images
                                         .filter((doc) => doc.isFile)
-                                        .map((doc, index) => (
-                                            <ListItem key={index} divider>
-                                                <ListItemText primary={doc.path.split(/[/\\]/).pop()} />
-                                                <Button
-                                                    variant="outlined"
-                                                    component="a"
-                                                    href={`https://localhost:7249/uploads/documents/${doc.path.split(/[/\\]/).pop()}`}
-                                                    download={doc.name}
-                                                >
-                                                    Download
-                                                </Button>
-                                            </ListItem>
-                                        ))}
+                                        .map((doc, index) => {
+                                            const fileName = doc.path.split(/[/\\]/).pop();
+                                            const fileUrl = `https://localhost:7249/uploads/documents/${fileName}`;
+                                            return (
+                                                <ListItem key={index} divider>
+                                                    <ListItemText
+                                                        primary={
+                                                            <Typography
+                                                                component="a"
+                                                                href={fileUrl}
+                                                                download={doc.name}
+                                                                sx={{ textDecoration: 'none', color: 'primary.main', cursor: 'pointer' }}
+                                                            >
+                                                                {fileName}
+                                                            </Typography>
+                                                        }
+                                                    />
+                                                    <Button
+                                                        variant="outlined"
+                                                        component="a"
+                                                        href={fileUrl}
+                                                        download={doc.name}
+                                                    >
+                                                        Download
+                                                    </Button>
+                                                </ListItem>
+                                            );
+                                        })}
                                 </List>
                             </Grid>
-
                         </Grid>
                     </CardContent>
                 </Card>
@@ -510,7 +558,7 @@ const SeloProfil: React.FC<VillageProfileProps> = ({
 
             <Box sx={{ mt: 2 }}>
                 <Button variant="contained" onClick={handleProfileUpdate}>
-                    {editMode ? 'Save Changes' : 'Close'}
+                    {editMode ? 'Sačuvaj' : 'Zatvori'}
                 </Button>
                 {editMode && (
                     <Button
@@ -520,7 +568,7 @@ const SeloProfil: React.FC<VillageProfileProps> = ({
                         }}
                         sx={{ ml: 2 }}
                     >
-                        Go Back
+                        Nazad
                     </Button>
                 )}
             </Box>

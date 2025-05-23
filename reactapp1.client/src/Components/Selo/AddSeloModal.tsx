@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+﻿/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useEffect } from 'react';
 import { Button, Modal, Box, Typography, TextField, FormControl, InputLabel, MenuItem, Select, DialogActions } from '@mui/material';
 import { DodajSelo } from './SeloList';
@@ -68,7 +68,7 @@ const AddSeloModal: React.FC<AddSeloModalProps> = ({
                     margin="normal"
                 />
                 <FormControl fullWidth margin="normal">
-                    <InputLabel>Drzava</InputLabel>
+                    <InputLabel>Država</InputLabel>
                     <Select
                         value={newSelo.country}
                         name="country"
@@ -97,7 +97,7 @@ const AddSeloModal: React.FC<AddSeloModalProps> = ({
                 </FormControl>
                 {/* Dropdown for "Ovlasceni Korisnik" */}
                 <FormControl fullWidth margin="normal">
-                    <InputLabel>Ovlasceni Korisnik</InputLabel>
+                    <InputLabel>Ovlašćeni Korisnik</InputLabel>
                     <Select
                         value={newSelo.ovlasceniKorisnik}
                         name="ovlasceniKorisnik"
@@ -112,7 +112,7 @@ const AddSeloModal: React.FC<AddSeloModalProps> = ({
                 </FormControl>
                 <DialogActions>
                     <Button onClick={onClose} color="primary">
-                        Otkazi
+                        Otkaži
                     </Button>
                     <Button onClick={handleAddSelo} color="primary">
                         Dodaj

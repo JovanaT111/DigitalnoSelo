@@ -29,6 +29,7 @@ const Header2: React.FC = () => {
                     <Nav className="ms-auto">
                         {role === 'Admin' && <Nav.Link style={{ fontWeight: 'bold' }} href="/users">Korisnici</Nav.Link>}
                         {role === 'Admin' && <Nav.Link style={{ fontWeight: 'bold' }} href="/villages">Sela</Nav.Link>}
+                        {role === 'Admin' && <Nav.Link style={{ fontWeight: 'bold' }} href="/sifarnici">Administracija</Nav.Link>}
                         {role !== 'Admin' && <Nav.Link style={{ fontWeight: 'bold' }}  href="/my-villages">Moja Sela</Nav.Link>}
                         <NavDropdown style={{ fontWeight: 'bold' }} title={
                             <>

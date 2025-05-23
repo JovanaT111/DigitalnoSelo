@@ -10,9 +10,9 @@ namespace ReactApp1.Server.Models
         public int CountriesId { get; set; }
 
         [JsonIgnore]
-        public Countries Country { get; set; }
+        public Countries Country { get; set; } = new();
 
-        public Double Lat { get; set; }
-        public Double Lng { get; set; }
+        public Double? Lat { get; set; }
+        public Double? Lng { get; set; }
     }
 }

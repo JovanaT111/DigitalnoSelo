@@ -1,6 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, IconButton, Typography, Button, Box } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
@@ -162,9 +160,9 @@ const SeloList: React.FC = () => {
                     <TableHead>
                         <TableRow>
                             <TableCell><strong>Naslov</strong></TableCell>
-                            <TableCell><strong>Drzava</strong></TableCell>
+                            <TableCell><strong>Država</strong></TableCell>
                             <TableCell><strong>Lokacija</strong></TableCell>
-                            <TableCell><strong>Ovlasceni Korisnik</strong></TableCell>
+                            <TableCell><strong>Ovlašćeni Korisnik</strong></TableCell>
                             <TableCell align="center"><strong>Akcija</strong></TableCell>
                         </TableRow>
                     </TableHead>

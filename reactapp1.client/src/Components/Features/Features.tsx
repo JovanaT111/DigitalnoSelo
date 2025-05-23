@@ -1,5 +1,4 @@
-﻿/* eslint-disable @typescript-eslint/no-explicit-any */
-import { Button } from '@mui/material';
+﻿import { Button } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -17,7 +16,7 @@ const Features: React.FC = () => {
     useEffect(() => {
         const fetchNews = async () => {
             try {
-                const response = await fetch('https://localhost:7249/api/Novosti'); // Update this URL with your actual API endpoint
+                const response = await fetch('https://localhost:7249/api/Novosti'); 
                 if (response.ok) {
                     const data = await response.json();
                     setNews(data);

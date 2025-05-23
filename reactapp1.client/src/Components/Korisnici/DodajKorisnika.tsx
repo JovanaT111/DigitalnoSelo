@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Dialog, DialogActions, DialogContent, DialogTitle, TextField, Button, MenuItem, Select, InputLabel, FormControl } from '@mui/material';
 import axios from 'axios';
 import { toast } from 'react-toastify';
@@ -7,6 +7,8 @@ interface DodajKorisnikaProps {
     open: boolean;
     onClose: () => void;
     onAddUser: (newUser: ApplicationUser) => void;
+    onUpdateUser?: (updatedUser: ApplicationUser) => void;
+    initialData?: ApplicationUser | null;
     villages: string[];
 }
 
@@ -18,7 +20,7 @@ export interface ApplicationUser {
     villages: string[];
 }
 
-const DodajKorisnika: React.FC<DodajKorisnikaProps> = ({ open, onClose, onAddUser, villages }) => {
+const DodajKorisnika: React.FC<DodajKorisnikaProps> = ({ open, onClose, onAddUser, onUpdateUser, initialData, villages }) => {
     const [newUser, setNewUser] = useState<ApplicationUser>({
         id: '',
         firstName: '',
@@ -26,6 +28,15 @@ const DodajKorisnika: React.FC<DodajKorisnikaProps> = ({ open, onClose, onAddUse
         email: '',
         villages: [],
     });
+    const [users, setUsers] = useState<ApplicationUser[]>([]);
+
+    useEffect(() => {
+        if (initialData) {
+            setNewUser(initialData);
+        } else {
+            setNewUser({ id: '', firstName: '', lastName: '', email: '', villages: [] });
+        }
+    }, [initialData, open]);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -44,20 +55,39 @@ const DodajKorisnika: React.FC<DodajKorisnikaProps> = ({ open, onClose, onAddUse
 
     const handleAddUser = async () => {
         try {
-            
+
             await axios.post('https://localhost:7249/api/usermanager/register', newUser);
             onAddUser(newUser);
-            setNewUser({ id: '', firstName: '', lastName: '', email: '', villages: [] }); 
+            setNewUser({ id: '', firstName: '', lastName: '', email: '', villages: [] });
             onClose();
-            toast.success('Korisnik je uspje�no dodat!');
+            toast.success('Korisnik je uspješno dodat!');
         } catch (err) {
             console.error('Failed to add user:', err);
         }
     };
 
+    const handleSave = async () => {
+        try {
+            if (initialData && onUpdateUser) {
+                await axios.put(`https://localhost:7249/api/usermanager/${newUser.id}`, newUser);
+                onUpdateUser(newUser);
+                toast.success('Korisnik je uspješno ažuriran!');
+            } else {
+                await axios.post('https://localhost:7249/api/usermanager/register', newUser);
+                onAddUser(newUser);
+                toast.success('Korisnik je uspješno dodat!');
+            }
+            onClose();
+            setNewUser({ id: '', firstName: '', lastName: '', email: '', villages: [] });
+        } catch (err) {
+            console.error('Failed to save user:', err);
+            toast.error('Greška prilikom spremanja korisnika.');
+        }
+    };
+
     return (
         <Dialog open={open} onClose={onClose}>
-            <DialogTitle>Dodaj korisnika</DialogTitle>
+            <DialogTitle>{initialData ? 'Uredi korisnika' : 'Dodaj korisnika'}</DialogTitle>
             <DialogContent>
                 <TextField
                     label="Ime"
@@ -89,7 +119,8 @@ const DodajKorisnika: React.FC<DodajKorisnikaProps> = ({ open, onClose, onAddUse
                     <Select
                         multiple
                         value={newUser.villages}
-                        label="Pridru�ena Sela"
+                        onChange={handleVillageChange}
+                        label="Pridružena Sela"
                     >
                         {villages.map((village) => (
                             <MenuItem key={village} value={village}>
@@ -100,11 +131,9 @@ const DodajKorisnika: React.FC<DodajKorisnikaProps> = ({ open, onClose, onAddUse
                 </FormControl>
             </DialogContent>
             <DialogActions>
-                <Button onClick={onClose} color="primary">
-                    Otkazi
-                </Button>
-                <Button onClick={handleAddUser} color="primary">
-                    Dodaj
+                <Button onClick={onClose} color="primary">Otkaži</Button>
+                <Button onClick={handleSave} color="primary">
+                    {initialData ? 'Spremi' : 'Dodaj'}
                 </Button>
             </DialogActions>
         </Dialog>

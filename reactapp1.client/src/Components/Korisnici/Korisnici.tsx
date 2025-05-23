@@ -2,16 +2,19 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import {
     Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper,
-    CircularProgress, Grid, Typography, Box, Alert, Button
+    CircularProgress, Grid, Typography, Box, Alert, Button,
+    IconButton
 } from '@mui/material';
 import DodajKorisnika, { ApplicationUser } from './DodajKorisnika';
 import HeroSection from '../HeroSection/HeroSection';
+import EditIcon from '@mui/icons-material/Edit';
 
 const Korisnici: React.FC = () => {
     const [users, setUsers] = useState<ApplicationUser[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
     const [open, setOpen] = useState<boolean>(false);
+    const [editingUser, setEditingUser] = useState<ApplicationUser | null>(null);
 
     useEffect(() => {
         const fetchUsers = async () => {
@@ -29,6 +32,12 @@ const Korisnici: React.FC = () => {
     }, []);
 
     const handleClickOpen = () => {
+        setEditingUser(null);
+        setOpen(true);
+    };
+
+    const handleEditUser = (user: ApplicationUser) => {
+        setEditingUser(user);
         setOpen(true);
     };
 
@@ -38,6 +47,12 @@ const Korisnici: React.FC = () => {
 
     const handleAddUser = (newUser: ApplicationUser) => {
         setUsers((prevUsers) => [...prevUsers, newUser]);
+    };
+
+    const handleUpdateUser = (updatedUser: ApplicationUser) => {
+        setUsers((prevUsers) =>
+            prevUsers.map((u) => (u.id === updatedUser.id ? updatedUser : u))
+        );
     };
 
     if (loading) {
@@ -82,6 +97,7 @@ const Korisnici: React.FC = () => {
                                 <TableRow>
                                     <TableCell><strong>Ime i prezime</strong></TableCell>
                                     <TableCell><strong>Email</strong></TableCell>
+                                    <TableCell><strong></strong></TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -89,6 +105,11 @@ const Korisnici: React.FC = () => {
                                     <TableRow key={user.id}>
                                         <TableCell>{user.firstName} {user.lastName}</TableCell>
                                         <TableCell>{user.email}</TableCell>
+                                        <TableCell align="center">
+                                            <IconButton color="secondary" onClick={() => handleEditUser(user)} title="Edit">
+                                                <EditIcon />
+                                            </IconButton>
+                                        </TableCell>
                                     </TableRow>
                                 ))}
                             </TableBody>
@@ -100,7 +121,11 @@ const Korisnici: React.FC = () => {
             <DodajKorisnika
                 open={open}
                 onClose={handleClose}
-                onAddUser={handleAddUser} villages={[]} />
+                onAddUser={handleAddUser}
+                onUpdateUser={handleUpdateUser}
+                initialData={editingUser}
+                villages={[]}
+            />
         </Box>
     );
 };

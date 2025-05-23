@@ -33,6 +33,23 @@ namespace ReactApp1.Server.Controllers
             return Ok(users);
         }
 
+        [HttpGet("by-email")]
+        public async Task<IActionResult> GetUserByEmail([FromQuery] string email)
+        {
+            if (string.IsNullOrWhiteSpace(email))
+            {
+                return BadRequest("Email parameter is required.");
+            }
+
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(user);
+        }
+
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] ApplicationUser newUser)
         {
@@ -65,6 +82,45 @@ namespace ReactApp1.Server.Controllers
             await SendWelcomeEmail(user.Email, pass);
 
             return Ok(user);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateUser(string id, [FromBody] ApplicationUser updatedUser)
+        {
+            if (id != updatedUser.Id)
+            {
+                return BadRequest("User ID mismatch.");
+            }
+
+            var user = await _userManager.FindByIdAsync(id);
+            if (user == null)
+            {
+                return NotFound("User not found.");
+            }
+
+            user.FirstName = updatedUser.FirstName;
+            user.LastName = updatedUser.LastName;
+
+            if (user.Email != updatedUser.Email)
+            {
+                var setEmailResult = await _userManager.SetEmailAsync(user, updatedUser.Email);
+                var setUserNameResult = await _userManager.SetUserNameAsync(user, updatedUser.Email);
+                if (!setEmailResult.Succeeded || !setUserNameResult.Succeeded)
+                {
+                    var errors = setEmailResult.Errors.Concat(setUserNameResult.Errors);
+                    return BadRequest($"Email update failed: {string.Join(", ", errors.Select(e => e.Description))}");
+                }
+            }
+
+            var result = await _userManager.UpdateAsync(user);
+            if (result.Succeeded)
+            {
+                return Ok(user);
+            }
+            else
+            {
+                return BadRequest($"Update failed: {string.Join(", ", result.Errors.Select(e => e.Description))}");
+            }
         }
 
         // POST: api/users/forgot-password
